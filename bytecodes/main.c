@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 	int fs, is_push = 0;
 	unsigned int line = 1;
 	ssize_t n_read;
-	char *lnptr, *token;
+	char *lineptr, *token;
 	stack_t *head = NULL;
 
 	if (argc != 2)
@@ -25,17 +25,17 @@ int main(int argc, char *argv[])
 		printf("Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
-	lnptr = malloc(sizeof(char) * 10000);
-	if (!lnptr)
+	lineptr = malloc(sizeof(char) * 10000);
+	if (!lineptr)
 		return (0);
-	n_read = read(fs, lnptr, 10000);
+	n_read = read(fs, lineptr, 10000);
 	if (n_read == -1)
 	{
-		free(lnptr);
+		free(lineptr);
 		close(fs);
 		exit(EXIT_FAILURE);
 	}
-	token = strtok(lnptr, "\n\t\a\r ;:");
+	token = strtok(lineptr, "\n\t\a\r ;:");
 	while (token != NULL)
 	{
 		if (is_push == 1)
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 		line++;
 		token = strtok(NULL, "\n\t\a\r ;:");
 	}
-	free_dlist(&head); free(lnptr);
+	free_dlist(&head); free(lineptr);
 	close(fs);
 	return (0);
 }

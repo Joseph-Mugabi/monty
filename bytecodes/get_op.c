@@ -2,12 +2,12 @@
 
 /**
  * get_op - function to select correct operation function
- * @ops: 1st bytecode input (opcode)
+ * @token1: 1st bytecode input (opcode)
  * Return: pointer to correct operation function
  */
-void (*get_op(char *ops))(stack_t **stack, unsigned int line_number)
+void (*get_op(char *op))(stack_t **stack, unsigned int line_number)
 {
-	instruction_t valid_ops[] = {
+	instruction_t instruction_s[] = {
 		{"pop", pop},
 		{"pall", pall},
 		{"pint", pint},
@@ -26,10 +26,10 @@ void (*get_op(char *ops))(stack_t **stack, unsigned int line_number)
 	};
 	int i = 0;
 
-	while (valid_ops[i].f != NULL)
+	while (instruction_s[i].f != NULL)
 	{
-		if (strcmp(ops, valid_ops[i].opcode) == 0)
-			return (valid_ops[i].f);
+		if (strcmp(op, instruction_s[i].opcode) == 0)
+			return (instruction_s[i].f);
 		i++;
 	}
 	return (NULL);
